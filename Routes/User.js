@@ -102,6 +102,9 @@ userRoute.get(
         _id: user._id,
         name: user.name,
         email: user.email,
+        lastname: user.lastname,
+        age: user.age,
+        gender: user.gender,
         createdAt: user.createdAt,
       });
     } else {
@@ -121,15 +124,20 @@ userRoute.put(
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
-      if (req.body.password) {
-        user.password = req.body.password;
-      }
+      user.lastname = req.body.lastName || user.lastname;
+      user.age = req.body.Age || user.age;
+      user.gender = req.body.gender || user.gender;
+
       const updatedUser = await user.save();
+      console.log(req.body, user, updatedUser);
+
       res.json({
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
-        token: generateToken(updatedUser._id),
+        lastname: updatedUser.lastname,
+        age: updatedUser.age,
+        gender: updatedUser.gender,
       });
     } else {
       res.status(404);
